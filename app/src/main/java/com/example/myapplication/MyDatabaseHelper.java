@@ -9,6 +9,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class MyDatabaseHelper extends SQLiteOpenHelper {
     private Context context ;
     private static final String DATABASE_NAME = "EventClub.db";
@@ -37,14 +41,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String query1 = "CREATE TABLE " + TABLE1_NAME +
                 " (" +COLUMN1_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 COLUMN1_TITLE +" TEXT," +
-                COLUMN1_DATE + " TEXT, " +
+                COLUMN1_DATE + " DATETIME, " +
                 COLUMN1_DUREE + " TEXT);";
 
         db.execSQL(query1);
         String query2 = "CREATE TABLE " + TABLE2_NAME +
                 " (" +COLUMN2_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "+
                 COLUMN2_TITLE +" TEXT," +
-                COLUMN2_DATE + " TEXT, " +
+                COLUMN2_DATE + " DATETIME, " +
                 COLUMN2_DUREE + " TEXT);";
 
         db.execSQL(query2);
@@ -158,4 +162,22 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE1_NAME);
     }
+
+
+    //fonction pour avoir heure et date locale
+
+
+    protected static final String getDateTime(){
+        SimpleDateFormat dateFormat= null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            dateFormat = new SimpleDateFormat("YYYY-MM-DD HH-mm-ss", Locale.getDefault());
+        }
+        Date date=new Date();
+        return dateFormat.format(date);
+
+    }
+
+
+
+
 }
